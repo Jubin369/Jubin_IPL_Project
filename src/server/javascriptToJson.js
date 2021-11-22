@@ -10,6 +10,10 @@ const matchWonPerTeamPerYear = matchesWonPerTeamsPerYear.matchesWonPerTeamPerSea
 const extrasRunPerTeam =  require(`${__dirname}/test/testExtraRunPerTeam2016`)
 const extrasRunPerTeamIn2016 =extrasRunPerTeam.extraRunPerTeam2016
 
+const topEconomicalBowlers = require(`${__dirname}/test/testEconomicalBowlerIn2015`)
+const topTenEconomicalBowlerIn2015 = topEconomicalBowlers.topEconomicalBowler
+
+
 function javascriptToJson(fileName,data){
     fs.writeFile(`./../public/output/${fileName}.json`,JSON.stringify(data),function(err){
         if (err){
@@ -36,6 +40,12 @@ try {
 try {
     javascriptToJson('extraRunPerTeamIn2016',extrasRunPerTeamIn2016)
     
+} catch (error) {
+    console.log(error.message);
+}
+
+try {
+    javascriptToJson('topEconomicalBowlerIn2015',topTenEconomicalBowlerIn2015)
 } catch (error) {
     console.log(error.message);
 }

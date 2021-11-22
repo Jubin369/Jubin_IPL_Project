@@ -71,4 +71,55 @@ function extraRunPerTeamIn2016(matches,deliveries){
 }
 
 
-module.exports = {matchesWonPerYear,matchesWonPerTeamPerYear,extraRunPerTeamIn2016};
+// --------------------------------- topEconomicalBowlerIn2015----------------------------------
+function topEconomicalBowlerIn2015(matches,deliveries){
+  
+    let bowlerRun = {}
+    let bowlerBall = {};
+    let economicalRate = {};
+    let topTenBowler = {};
+
+    let matchID = [];
+    for(key=0;key<matches.length;key++){
+        if(matches[key].season === '2015'){
+            matchID.push(matches[key].id);
+        }
+    }     
+    
+    matchID.forEach((id) => {  
+        for(let deliveryIndex=0;deliveryIndex < deliveries.length;deliveryIndex++){
+            if(id==deliveries[deliveryIndex].match_id){
+                                                 
+                bowlerBall[deliveries[deliveryIndex].bowler] = 0;
+                bowlerRun[deliveries[deliveryIndex].bowler] = 0;
+            }
+        }
+    });
+    
+    matchID.forEach( (id) => {
+        for(let deliveryIndex=0;deliveryIndex < deliveries.length;deliveryIndex++){
+            if(id==deliveries[deliveryIndex].match_id){
+                //calculating bowler runs
+                bowlerRun[deliveries[deliveryIndex].bowler] += parseInt(deliveries[deliveryIndex].batsman_runs) 
+
+                if (deliveries[deliveryIndex].wide_runs == 0 && deliveries[deliveryIndex].noball_runs == 0) {
+                    //calculating bowler balls
+                    bowlerBall[deliveries[deliveryIndex].bowler] += 1;
+                }
+            }
+        }
+    })   
+    
+    
+    Object.keys(bowlerBall).forEach((bowlerName) => {
+        economicalRate[bowlerName] = (bowlerRun[bowlerName]/bowlerBall[bowlerName]) })   // Using formula for calculating Economical rate of every bowler
+    let unsorted = Object.entries(economicalRate);                 
+    let sorted = unsorted.sort((a, b) => a[1] -b[1]);              
+    let tenBowler = sorted.slice(0,10);                            
+    tenBowler.forEach((key) => (topTenBowler[key[0]] = key[1]) ); 
+    
+    return topTenBowler;
+    
+}
+
+module.exports = {matchesWonPerYear,matchesWonPerTeamPerYear,extraRunPerTeamIn2016,topEconomicalBowlerIn2015};
