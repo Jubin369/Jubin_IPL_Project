@@ -44,7 +44,13 @@ function matchesWonPerTeamPerYear(matches){
 function extraRunPerTeamIn2016(matches,deliveries){
    
     let extraRunPerTeam={};
-    let matchID = Object.keys(matches).filter((id) => matches[id].season === '2016');     
+    let matchID = [];
+    
+    for(key=0;key<matches.length;key++){
+        if(matches[key].season === '2016'){
+            matchID.push(matches[key].id);
+        }
+    }     
     let allWonTeam = Object.keys(matches).map((key) =>  (matches[key].team1))  
     allWonTeam = Object.keys(matches).map((key) =>   (matches[key].team2))     
     let wonTeam = allWonTeam.filter((item,i,arr) => arr.indexOf(item) === i);  // Extracting unique team from allTeam in wonTeam
