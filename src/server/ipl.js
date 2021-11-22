@@ -38,4 +38,31 @@ function matchesWonPerTeamPerYear(matches){
 }
 
 
-module.exports = {matchesWonPerYear,matchesWonPerTeamPerYear};
+//-------------------------extraRunPerTeamIn2016-----------------------------------------------
+// const fs = require('fs')
+
+function extraRunPerTeamIn2016(matches,deliveries){
+   
+    let extraRunPerTeam={};
+    let matchID = Object.keys(matches).filter((id) => matches[id].season === '2016');     
+    let allWonTeam = Object.keys(matches).map((key) =>  (matches[key].team1))  
+    allWonTeam = Object.keys(matches).map((key) =>   (matches[key].team2))     
+    let wonTeam = allWonTeam.filter((item,i,arr) => arr.indexOf(item) === i);  // Extracting unique team from allTeam in wonTeam
+    wonTeam.forEach((teamName) => (extraRunPerTeam[teamName] = 0) )  
+          
+    matchID.forEach((key) => {
+        for(let deliveryIndex=0;deliveryIndex < deliveries.length;deliveryIndex++){
+            if(key==deliveries[deliveryIndex].match_id){
+                
+                extraRunPerTeam[deliveries[deliveryIndex]['batting_team']] += parseInt(deliveries[deliveryIndex]['extra_runs']);
+            }
+        }
+    });
+    
+
+    return extraRunPerTeam;
+    
+}
+
+
+module.exports = {matchesWonPerYear,matchesWonPerTeamPerYear,extraRunPerTeamIn2016};
