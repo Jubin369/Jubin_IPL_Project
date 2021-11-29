@@ -39,7 +39,6 @@ function matchesWonPerTeamPerYear(matches){
 
 
 //-------------------------extraRunPerTeamIn2016-----------------------------------------------
-// const fs = require('fs')
 
 function extraRunPerTeamIn2016(matches,deliveries){
    
